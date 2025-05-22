@@ -1,0 +1,305 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('/image/backg.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header styling */
+header {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px 40px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .title {
+    font-size: 2.5rem;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    transform: translateX(10%);
+}
+
+/* Navigation styling */
+header nav {
+    display: flex;
+    gap: 15px;
+}
+
+header nav a {
+    background-color: #ffcc00;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav a:hover {
+    background-color: #e6b800;
+    color: #fff;
+}
+
+/* Footer styling */
+footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ccc;
+    text-align: center;
+    padding: 15px 10px;
+    font-size: 0.9rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+/* Main content styling */
+main {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    max-width: 900px;
+    width: 90%;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+a.button {
+    display: inline-block;
+    background-color: #ffcc00;
+    color: #000;
+    padding: 12px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+a.button:hover {
+    background-color: #e6b800;
+}
+
+/* Register Page Styling */
+.register-body {
+    background: url('/image/backg.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    width: 100%;
+}
+
+.register-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.register-container {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 60px 50px;
+    border-radius: 20px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.register-container h2 {
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    color: #ffcc00;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 10000px;
+    margin: 0 auto;
+}
+
+.register-form label {
+    font-size: 1.3rem;
+    color: #fff;
+    align-self: flex-start;
+    width: 100%;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #fff;
+    color: #000;
+}
+
+.register-form button {
+    width: 60%;
+    padding: 16px;
+    font-size: 1.4rem;
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-form button:hover {
+    background-color: #e6b800;
+}
+
+/* Login Page Styling */
+.login-body {
+    background: url('/image/backg.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    width: 100%;
+}
+
+.login-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.login-container {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 60px 50px;
+    border-radius: 20px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.login-container h2 {
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    color: #ffcc00;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.login-form label {
+    font-size: 1.3rem;
+    color: #fff;
+    align-self: flex-start;
+    width: 100%;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #fff;
+    color: #000;
+}
+
+.login-form button {
+    width: 60%;
+    padding: 16px;
+    font-size: 1.4rem;
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+    background-color: #e6b800;
+}
+
+
+/*
+ * Background for the vehicle client side cards
+*/
+.bg1{
+   background-color: rgba(0, 0, 0, 0.75);
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+   border-radius: 20px;
+   padding: 20px;
+}
+.card{
+    border-radius: 10px;
+    text-align: left;
+    font-size: 17px;
+    font-weight: 500;
+}
+.btn{
+    border-radius: 20px;
+}
+
+.form-group{
+    color: black;
+}
+/*
+ * pill
+*/
+.txt2{
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+}

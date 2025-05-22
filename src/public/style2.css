@@ -1,0 +1,128 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.navbar {
+  background-color: #000;
+}
+
+.navbar-brand,
+.nav-link {
+  color: white !important;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  color: #ffc107 !important;
+}
+
+.btn-yellow {
+  background-color: #ffc107;
+  color: black;
+  font-weight: bold;
+  border-radius: 25px;
+}
+
+.btn-yellow:hover {
+  background-color: #e0a800;
+}
+
+.card {
+  background-color: #212529;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+
+.card .btn {
+  width: 100%;
+}
+
+h1,
+h2 {
+  font-weight: bold;
+}
+
+.nav-item.active > .nav-link,
+.nav-link.active {
+  color: #fff !important;
+  border-bottom: 2px solid #fff;
+}
+/*
+ * Edit form css 
+*/
+.tc{
+  color: black;
+}
+.tb{
+  background-color: #0f0c29;
+}
+/*
+ * End
+*/
+
+/*
+ * card-title font
+*/
+.tf{
+    font-size: 25px;
+}
+/*
+ * pill
+*/
+.td, .pill{
+  padding: 16px;
+ 
+}
+.pill{
+  font-size: 14px;
+
+}
+.btn-t{
+  margin-bottom: 16px;
+}
+/*
+ * Table
+*/
+.table-responsive {
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+/* Fix header alignment and background color */
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  vertical-align: middle;
+  text-align: left;
+  padding: 12px;
+}
+
+/* Align images and content in table cells */
+.table td, .table th {
+  vertical-align: middle;
+}
+
+/* Make sure images do not stretch the rows */
+.table img {
+  height: 60px;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
+/*
+ * client status
+*/
+.txt{
+  border-radius: 20px;
+  padding: 10px;
+}
