@@ -126,3 +126,9 @@ thead th {
   border-radius: 20px;
   padding: 10px;
 }
+td{
+  color: white;
+}
+/*h6,p,h5{
+  color: black;
+}*/

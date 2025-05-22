@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/style2.css" />
+  <title>User Details - Admin Dashboard</title>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/adminmain">Admin Dashboard - The Car Zone</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="/adminmain">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/adminvehicle">View Vehicles</a></li>
+        <li class="nav-item"><a class="nav-link" href="/vehicles/addvehicle">Add Vehicle</a></li>
+        <li class="nav-item"><a class="nav-link" href="/adminbookings">Manage Bookings</a></li>
+        <li class="nav-item active"><a class="nav-link" href="/admin/users">Manage Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="/api/auth/logout" class="logout-btn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>User Details</h1>
+      <a href="/admin/users" class="btn btn-secondary">Back to Users</a>
+    </div>
+
+    <!-- User Information Card -->
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Customer Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>User ID:</strong> <%= selectedUser.id %></p>
+                <p><strong>Username:</strong> <%= selectedUser.username %></p>
+                <p><strong>Email:</strong> <%= selectedUser.email %></p>
+              </div>
+              <div class="col-md-6">
+                <p><strong>Role:</strong> 
+                  <span class="badge badge-info"><%= selectedUser.role %></span>
+                </p>
+                <p><strong>Registration Date:</strong> <%= new Date(selectedUser.created_at).toLocaleDateString() %></p>
+                <p><strong>Total Bookings:</strong> 
+                  <span class="badge badge-primary"><%= bookings.length %></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking History -->
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Booking History</h5>
+      </div>
+      <div class="card-body">
+        <% if (bookings && bookings.length > 0) { %>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Vehicle</th>
+                  <th>Booking Date</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Total Price</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% bookings.forEach(booking => { %>
+                  <tr>
+                    <td>#<%= booking.id %></td>
+                    <td><%= booking.year %> <%= booking.brand %> <%= booking.model %></td>
+                    <td><%= new Date(booking.booking_date).toLocaleDateString() %></td>
+                    <td><%= new Date(booking.start_date).toLocaleDateString() %></td>
+                    <td><%= new Date(booking.end_date).toLocaleDateString() %></td>
+                    <td>$<%= parseFloat(booking.total_price).toFixed(2) %></td>
+                    <td>
+                      <% 
+                        let statusClass = 'secondary';
+                        if (booking.status === 'confirmed') statusClass = 'success';
+                        else if (booking.status === 'pending') statusClass = 'warning';
+                        else if (booking.status === 'cancelled') statusClass = 'danger';
+                      %>
+                      <span class="badge badge-<%= statusClass %>">
+                        <%= booking.status.charAt(0).toUpperCase() + booking.status.slice(1) %>
+                      </span>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Booking Summary -->
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <div class="card bg-light">
+                <div class="card-body">
+                  <h6 style="color: black;">Booking Summary</h6>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <p style="color: black;"><strong>Total Bookings:</strong> <%= bookings.length %></p>
+                    </div>
+                    <div class="col-md-3">
+                      <p style="color: black;"><strong>Confirmed:</strong> 
+                        <%= bookings.filter(b => b.status === 'confirmed').length %>
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <p style="color: black;"><strong>Pending:</strong> 
+                        <%= bookings.filter(b => b.status === 'pending').length %>
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <p style="color: black;"><strong>Total Revenue:</strong> 
+                        $<%= bookings.reduce((sum, b) => sum + parseFloat(b.total_price), 0).toFixed(2) %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="alert alert-info text-center">
+            <h5 style="color: black;">No Bookings Found</h5>
+            <p style="color: black;">This customer hasn't made any bookings yet.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

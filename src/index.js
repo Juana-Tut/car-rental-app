@@ -16,6 +16,7 @@ const authRoutes = require('./routes/authRoutes');
 const vehicleRoutes = require('./routes/vehicleRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 
+
 // Import controller
 const vehicleController = require('./controllers/vehicleController');
 
@@ -71,11 +72,95 @@ app.get('/adminbookings', authenticate, authorizeRole('admin'), (req, res) =>{
 app.get('/dashboard', authenticate, authorizeRole('customer'), (req, res) => {
   res.render('./customer/dashboard', { user: req.user });
 });
+// Add this after your existing admin routes
+app.get('/admin/users', authenticate, authorizeRole('admin'), async (req, res) => {
+  try {
+    const pool = require('./models/db');
+    const query = `
+      SELECT 
+        id, 
+        first_name, 
+        last_name,
+        email, 
+        role, 
+        created_at,
+        (SELECT COUNT(*) FROM bookings WHERE user_id = users.id) as booking_count
+      FROM users 
+      WHERE role = 'customer'
+      
+    `;
+    
+    const result = await pool.query(query);
+    res.render('./admin/users', { 
+      users: result.rows,
+      user: req.user 
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).render('error', {
+      message: 'Error fetching users',
+      error: { status: 500, stack: error.message }
+    });
+  }
+});
 
+app.get('/admin/users/:userId', authenticate, authorizeRole('admin'), async (req, res) => {
+  try {
+    const pool = require('./models/db');
+    const userId = req.params.userId;
+    
+    // Get user details
+    const userQuery = `
+      SELECT id, first_name, last_name, email, role, created_at
+      FROM users 
+      WHERE id = $1 AND role = 'customer'
+    `;
+    const userResult = await pool.query(userQuery, [userId]);
+    
+    if (userResult.rows.length === 0) {
+      return res.status(404).render('error', {
+        message: 'User not found',
+        error: { status: 404, stack: 'The requested user does not exist.' }
+      });
+    }
+    
+    // Get user's bookings with vehicle details
+    const bookingsQuery = `
+      SELECT 
+        b.id,
+        b.start_date,
+        b.end_date,
+        b.total_price,
+        b.status,
+        b.created_at,
+        v.model,
+        v.year,
+        v.brand
+      FROM bookings b
+      JOIN vehicles v ON b.vehicle_id = v.id
+      WHERE b.user_id = $1
+      ORDER BY b.created_at DESC
+    `;
+    const bookingsResult = await pool.query(bookingsQuery, [userId]);
+    
+    res.render('./admin/user-details', {
+      selectedUser: userResult.rows[0],
+      bookings: bookingsResult.rows,
+      user: req.user
+    });
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).render('error', {
+      message: 'Error fetching user details',
+      error: { status: 500, stack: error.message }
+    });
+  }
+});
 
 // API Routes
 app.use('/vehicles', vehicleRoutes); // client side
 app.use('/api/auth', authRoutes);
+
 
 // Make sure authenticate middleware is applied at the route level instead
 // This ensures we don't apply it to routes that don't exist
